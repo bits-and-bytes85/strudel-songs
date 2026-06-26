@@ -1,0 +1,76 @@
+let bassProg = "<[c2 c3]*4 [bb1 bb2]*4 [f2 f3]*4 [eb2 eb3]*4>"
+let stabProg = "<c4 bb3 f4 eb4>"
+let arpPattern = "<[~ 0] 2 [0 2] [~ 2] [~ 0] 1 [0 1] [~ 1] [~ 0] 3 [0 3] [~ 3] [~ 0] 2 [0 2] [~ 2]>*4"
+
+let pad = note(bassProg)
+  .sound("sawtooth")
+  .lpf(sine.range(800, 2000).slow(8))
+
+let bass = note("[36 34 41 39]/4").sound("gm_acoustic_bass")
+
+let drums = sound("bd*4, [~ <sd cp>]*2, [~ hh]*4")
+  .bank("RolandTR909")
+  .gain(rand.range(0.85, 1))
+
+let hats = sound("hh*16").lpf(1900).gain(rand.range(0.6, 1))
+
+let stab = note(stabProg).euclid(5, 8)
+
+let arp = n(arpPattern)
+  .scale("C4:minor")
+  .sound("gm_synth_strings_1")
+
+let arpEcho = n(arpPattern)
+  .scale("C5:minor")
+  .sound("gm_synth_strings_1")
+  .gain(0.4)
+  .room(0.6)
+
+// --- Sections ---
+
+let section_intro = stack(pad)
+
+let section_build = stack(
+  pad,
+  bass,
+  sound("~ ~ ~ <hh*8 sd*8>").lpf(1900),
+  arp.gain(0.5)
+)
+
+let section_drop = stack(
+  pad,
+  bass,
+  drums,
+  hats,
+  stab,
+  arp
+)
+
+let section_drop2 = stack(
+  pad,
+  bass,
+  drums,
+  hats,
+  stab,
+  arp,
+  arpEcho
+)
+
+let section_breakdown = stack(
+  pad.lpf(sine.range(400, 1200).slow(6)),
+  arp.gain(0.6),
+  arpEcho
+)
+
+let section_outro = stack(
+  pad.lpf(sine.range(300, 900).slow(6)).gain(0.7)
+)
+
+arrange(
+  [4, section_intro],
+  [4, section_build],
+  [8, section_drop],
+  [4, section_breakdown],
+  [8, section_drop2],
+  [4, section_outro]
+).cpm(30);
