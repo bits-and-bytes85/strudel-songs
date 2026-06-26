@@ -1,0 +1,51 @@
+// note("36 43, 52 59 62 64").sound("gm_electric_guitar_muted")
+//note("[36 34 41 39]/4").sound("gm_acoustic_bass")
+
+// note("<[36 48]*4 [34 46]*4 [41 53]*4 [39 51]*4>")
+// .sound("gm_acoustic_bass")
+
+let section_1 =  stack(
+  note("<[c2 c3]*4 [bb1 bb2]*4 [f2 f3]*4 [eb2 eb3]*4>")
+.sound("sawtooth").lpf(sine.range(1000, 1900).slow(3))
+  )
+
+let section_2 = stack(
+  note("<[c2 c3]*4 [bb1 bb2]*4 [f2 f3]*4 [eb2 eb3]*4>")
+.sound("sawtooth").lpf(sine.range(1000, 1900).slow(3)),
+
+  note("[36 34 41 39]/4").sound("gm_acoustic_bass"),
+  sound("bd*4, [~ <sd cp>]*2, [~ hh]*4")
+.bank("RolandTR909"),
+
+    sound("hh*16").lpf(1900),
+  note("c4(5,8)"),
+)
+
+let section_3 = stack(
+  note("<[c2 c3]*4 [bb1 bb2]*4 [f2 f3]*4 [eb2 eb3]*4>")
+.sound("sawtooth").lpf(sine.range(1000, 1900).slow(3)),
+
+  note("[36 34 41 39]/4").sound("gm_acoustic_bass"),
+  sound("bd*4, [~ <sd cp>]*2, [~ hh]*4")
+.bank("RolandTR909"),
+    
+  sound("hh*16").lpf(1900),
+  note("c4(5,8)"),
+  
+  n(`<
+[~ 0] 2 [0 2] [~ 2]
+[~ 0] 1 [0 1] [~ 1]
+[~ 0] 3 [0 3] [~ 3]
+[~ 0] 2 [0 2] [~ 2]
+>*4`).scale("C4:minor").sound("gm_synth_strings_1")
+
+)
+
+
+arrange (
+  [4, section_1],
+  [4, section_2],
+  [4, section_3]
+).cpm(30);
+
+
