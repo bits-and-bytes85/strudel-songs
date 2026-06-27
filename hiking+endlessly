@@ -1,0 +1,97 @@
+setcpm(60)
+
+let chords = n("0 2 4 <[6,8] [7,9]>")
+  .scale("C:minor")
+  .sound("piano")
+  .gain(0.5)
+
+let chordsSoft = n("0 2 4 <[6,8] [7,9]>")
+  .scale("C:minor")
+  .sound("piano")
+  .gain(0.3)
+  .room(0.6)
+
+let melody = note("<f4 f4 f4 [~@2.2 d#4@1.5 c4@1.5 ~]>")
+  .sound("gm_trumpet")
+  .gain(0.9)
+  .attack(0.08)
+  .release(0.5)
+  .room(0.6)
+  .lpf(1500)
+  .vib(4)
+  .vibmod(0.05)
+
+let bass = note("<c2 ~ eb2 ~ g1 ~ bb1 ~>")
+  .sound("gm_acoustic_bass")
+  .gain(0.6)
+  .release(0.3)
+
+let bassWalk = note("<c2 eb2 ~ eb2 g1 bb1 ~ bb1>")
+  .sound("gm_acoustic_bass")
+  .gain(0.6)
+  .release(0.3)
+
+let drums = sound("~ rim ~ rim, ~ ~ <~ sd> ~")
+  .bank("RolandTR707")
+  .gain(0.25)
+  .room(0.3)
+
+let drumsBuild = sound("~ rim <~ rim> rim, ~ hh <~ sd> hh")
+  .bank("RolandTR707")
+  .gain(0.3)
+  .room(0.3)
+
+let melodyClimax = note("<[c4 eb4 g4 bb4] [g3 bb3 d4 f4] [bb3 d4 f4 g4] [f4 d4 c4 g3]>")
+  .sound("gm_alto_sax")
+  .gain(0.4)
+  .attack(0.1)
+  .release(0.3)
+  .room(0.4)
+  .fast(1)
+
+let melodyClimax2 = note("<[eb4 g4 bb4 d5] [bb3 d4 f4 g4] [d4 f4 g4 bb4] [g4 eb4 c4 c4]>")
+  .sound("gm_alto_sax")
+  .gain(0.45)
+  .attack(0.1)
+  .release(0.3)
+  .room(0.5)
+  .fast(1)
+
+let melodyReturn = note("<f4 f4 [f4 d#4@1.5] [c4@2 ~]>")
+  .sound("gm_trumpet")
+  .gain(0.6)
+  .attack(0.1)
+  .release(0.6)
+  .room(0.7)
+  .lpf(1200)
+  .vib(3)
+  .vibmod(0.04)
+
+// --- Sections ---
+
+let intro = stack(chordsSoft, melody)
+
+let verse = stack(chords, melody, bass)
+
+let fullBand = stack(chords, melody, bass, drums)
+
+let buildup = stack(chords, melody, bassWalk, drumsBuild)
+
+let climax = stack(chords, melodyClimax, bass, drums)
+
+let climax2 = stack(chords, melodyClimax2, bassWalk, drumsBuild)
+
+let comedown = stack(chordsSoft, melodyReturn, bass, drums.gain(0.15))
+
+let outro = stack(chordsSoft.gain(0.25), melodyReturn.gain(0.4))
+
+arrange(
+  [4, intro],
+  [4, verse],
+  [8, fullBand],
+  [4, buildup],
+  [8, climax],
+  [8, climax2],
+  [4, comedown],
+  [4, outro]
+).cpm(60);
