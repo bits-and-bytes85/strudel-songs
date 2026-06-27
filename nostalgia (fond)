@@ -4,17 +4,17 @@ let arpBass = n("0 1 2 1 0 1 2 1")
   .scale("<E3:major C#3:minor A2:major B2:major>")
   .sound("sawtooth")
   .lpf(1400)
-  .gain(0.6)
+  .gain(0.4)
   .release(0.08)
 
-let subBass = note("<e2 cs2 a1 b1>/2")
-  .sound("gm_synth_bass_1")
-  .gain(0.7)
+// let subBass = note("<e2 cs2 a1 b1>/2")
+//   .sound("gm_synth_bass_1")
+//   .gain(0.7)
 
 let pad = note("<[e3 b3] [cs3 gs3] [a2 e3] [b2 fs3]>")
   .sound("gm_synth_strings_1")
   .lpf(sine.range(1200, 2400).slow(8))
-  .gain(0.45)
+  .gain(0.7)
   .room(0.4)
 
 let pluck = n("0 2 4 2 0 2 4 2")
@@ -26,15 +26,15 @@ let pluck = n("0 2 4 2 0 2 4 2")
 
 let drums = sound("bd*4, ~ cp ~ cp, hh*8")
   .bank("RolandTR909")
-  .gain(rand.range(0.85, 1))
+  .gain(rand.range(0.6, 0.7))
 
-let openHat = sound("~ ~ oh ~ ~ ~ oh ~").bank("RolandTR909").gain(0.5)
+let openHat = sound("~ ~ oh ~ ~ ~ oh ~").bank("RolandTR909").gain(0.4)
 
 let lead = n("<~ 4 2 4 ~ 5 4 2>")
   .scale("<E4:major C#4:minor A3:major B3:major>")
   .sound("triangle")
-  .lpf(sine.range(500, 1000).slow(4))
-  .gain(0.5)
+  .lpf(sine.range(500, 1000).slow(1))
+  .gain(0.9)
   .room(0.3)
   .delay(0.25)
 
@@ -48,14 +48,13 @@ let intro = stack(
 let buildup = stack(
   pad,
   arpBass,
-  subBass,
+  // subBass,
   sound("~ ~ ~ hh*8").bank("RolandTR909")
 )
 
 let drive = stack(
   pad,
   arpBass,
-  subBass,
   drums,
   openHat,
   pluck
@@ -64,7 +63,6 @@ let drive = stack(
 let driveLead = stack(
   pad,
   arpBass,
-  subBass,
   drums,
   openHat,
   pluck,
@@ -80,7 +78,6 @@ let breakdown = stack(
 let finalDrive = stack(
   pad,
   arpBass,
-  subBass,
   drums,
   openHat,
   pluck,
