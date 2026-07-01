@@ -12,7 +12,7 @@ let arpBass = n("0 1 2 1 0 1 2 1")
 //   .gain(0.7)
 
 let pad = note("<[e3 b3] [cs3 gs3] [a2 e3] [b2 fs3]>")
-  .sound("gm_synth_strings_1")
+  .sound("gm_synth_strings_2")
   .lpf(sine.range(1200, 2400).slow(8))
   .gain(0.7)
   .room(0.4)
@@ -26,11 +26,11 @@ let pluck = n("0 2 4 2 0 2 4 2")
 
 let drums = sound("bd*4, ~ cp ~ cp, hh*8")
   .bank("RolandTR909")
-  .gain(rand.range(0.6, 0.7))
+  .gain(rand.range(0.5, 0.6))
 
-let openHat = sound("~ ~ oh ~ ~ ~ oh ~").bank("RolandTR909").gain(0.4)
+let openHat = sound("~ ~ oh ~ ~ ~ oh ~").bank("RolandTR909").gain(0.5)
 
-let lead = n("<~ 4 2 4 ~ 5 4 2>")
+let melody = n("<~ 4 2 4 ~ 5 4 2>")
   .scale("<E4:major C#4:minor A3:major B3:major>")
   .sound("triangle")
   .lpf(sine.range(500, 1000).slow(1))
@@ -60,19 +60,19 @@ let drive = stack(
   pluck
 )
 
-let driveLead = stack(
+let climax = stack(
   pad,
   arpBass,
   drums,
   openHat,
   pluck,
-  lead
+  melody
 )
 
 let breakdown = stack(
   pad.gain(0.6),
   pluck,
-  lead.gain(0.35)
+  melody.gain(0.35)
 )
 
 let finalDrive = stack(
@@ -81,7 +81,7 @@ let finalDrive = stack(
   drums,
   openHat,
   pluck,
-  lead.gain(0.6)
+  melody.gain(0.6)
 )
 
 let outro = stack(
@@ -93,7 +93,7 @@ arrange(
   [4, intro],
   [4, buildup],
   [8, drive],
-  [8, driveLead],
+  [8, climax],
   [4, breakdown],
   [10, finalDrive],
   [4, outro]
